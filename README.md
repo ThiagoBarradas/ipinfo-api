@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/ycf1pbn75f0bbut8/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoBarradas/ipinfo-api/branch/master)
+[![CircleCI](https://circleci.com/gh/ThiagoBarradas/ipinfo-api/tree/master.svg?style=svg)](https://circleci.com/gh/ThiagoBarradas/ipinfo-api/tree/master)
 [![codecov](https://codecov.io/gh/ThiagoBarradas/ipinfo-api/branch/master/graph/badge.svg)](https://codecov.io/gh/ThiagoBarradas/ipinfo-api)
 
 # IpInfo Api
