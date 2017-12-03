@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "IpInfo.Api": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_Environment": "Development",
+        " ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
