@@ -1,4 +1,6 @@
 ﻿using IpInfo.Api.Handlers;
+using IpInfo.Api.Loggers;
+using IpInfo.Api.Loggers.Interface;
 using IpInfo.Api.Managers;
 using IpInfo.Api.Serializers;
 using IpInfo.Api.Utilities;
@@ -19,14 +21,21 @@ namespace IpInfo.Api
             this.AddStopwatch(pipelines);
             this.EnableCors(pipelines);
             this.EnableCSRF(pipelines);
+            this.InitLogger(pipelines, container);
         }
 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
-            // Utilities
+            // Utilities / Others
             container.Register<IConfigurationUtility, ConfigurationUtility>().AsSingleton();
             container.Register<JsonSerializer, NancySerializer>().AsSingleton();
             container.Register<IStatusCodeHandler, StatusCodeHandler>().AsSingleton();
+
+            // Loggers
+            container.Register<IExceptionLogger, RollbarLogger>().AsSingleton();
+            container.Register<IRequestLogger, SerilogLogger>().AsSingleton();
+
+            // Managers
             container.Register<IIpInfoManager, IpInfoManager>().AsSingleton();
 
             base.ConfigureApplicationContainer(container);
@@ -73,6 +82,29 @@ namespace IpInfo.Api
         private void EnableCSRF(IPipelines pipelines)
         {
             Nancy.Security.Csrf.Enable(pipelines);
+        }
+
+        private void InitLogger(IPipelines pipelines, TinyIoCContainer container)
+        {
+            container.Resolve<IRequestLogger>().Setup(container.Resolve<IConfigurationUtility>());
+
+            pipelines.OnError.AddItemToStartOfPipeline((context, exception) =>
+            {
+                container.Resolve<IExceptionLogger>().LogCritical(exception);
+                container.Resolve<IRequestLogger>().LogData(context, exception);
+                return null;
+            });
+
+            pipelines.AfterRequest.AddItemToEndOfPipeline((context) =>
+            {
+                container.Resolve<IRequestLogger>().LogData(context);
+            });
+
+            pipelines.OnError.AddItemToStartOfPipeline((context, exception) =>
+            {
+                container.Resolve<IExceptionLogger>().LogCritical(exception);
+                return null;
+            });
         }
     }
 }

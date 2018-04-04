@@ -31,7 +31,7 @@ Response 200 OK:
 Please, refer to [CONTRIBUTING](CONTRIBUTING.md)
 
 # Found something strange or need a new feature?
-Open a new Issue following our issue template [ISSUE-TEMPLATE](ISSUE-TEMPLATE.md)
+Open a new Issue following our issue template [ISSUE TEMPLATE](.github/ISSUE_TEMPLATE.md)
 
 # Changelog
 See in [releases](https://github.com/ThiagoBarradas/ipinfo-api/releases)

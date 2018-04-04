@@ -17,7 +17,8 @@ namespace IpInfo.Api
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile($"appSettings.{envName}.json");
+                .AddJsonFile($"appSettings.{envName}.json")
+                .AddEnvironmentVariables("IPINFO_");
 
             Configuration = builder.Build();
         }

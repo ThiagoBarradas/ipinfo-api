@@ -5,5 +5,9 @@
         string IpInfoServiceUrl { get; }
 
         int IpInfoServiceTimeoutInSeconds { get; }
+
+        string RollbarAccessToken { get; }
+
+        string RollbarEnvironment { get; }
     }
 }
